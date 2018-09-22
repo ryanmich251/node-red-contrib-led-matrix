@@ -4,7 +4,10 @@
 		category: 'config',
 		defaults: {
 			height: {value:64, required:true},
-			width:  {value:64, required:true}
+			width:  {value:64, required:true},
+			chained: {value:2, required:true},
+			parallel: {value:1, required:true},
+			mapping: {value:"adafruit-hat-pwm", required:true},
 		},
 		label: function() {
 			return "LED MATRIX";
@@ -21,8 +24,31 @@
 		<label for="node-config-input-height"><i class="icon-bookmark"></i> Height</label>
 		<input type="text" id="node-config-input-height">
 	</div>
+	<div class="form-row">
+		<label for="node-config-input-chained"><i class="icon-bookmark"></i> Chained Panels</label>
+		<input type="text" id="node-config-input-chained">
+	</div>
+
+	<div class="form-row">
+		<label for="node-config-input-parallel"><i class="icon-bookmark"></i> Parallel Panels</label>
+		<input type="text" id="node-config-input-parallel">
+	</div>
+
+	<div class="form-row">
+		<label for="node-config-input-mapping"><i class="icon-bookmark"></i> Hardware Mapping</label>
+		<input type="text" id="node-config-input-mapping">
+	</div>
+
+
+
 </script>
 
+
+<!--
+	this block describes  the appearance of the node itself
+	and also what type of settings it holds
+	also the category, config is a special category; all others are arbitrary
+-->
 
 <script type="text/javascript">
     RED.nodes.registerType('rpixel',{
@@ -37,11 +63,15 @@
         outputs:0,
         icon: "file.png",
         label: function() {
-            return this.name||"rpixel";
+            return this.name||"rpixel to matrix";
         }
     });
 </script>
 
+<!--
+	this block describes the settings page where we can select which config nodes to bind
+	and other paramters we have previously mentioned in the 'defaults' block up there ^
+-->
 <script type="text/x-red" data-template-name="rpixel">
     <div class="form-row">
         <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
@@ -53,8 +83,12 @@
 	</div>
 </script>
 
+<!--
+	this block describes the help text
+-->
+
 <script type="text/x-red" data-help-name="rpixel">
-    <p>prints a colour to a pixel</p>
+    <p>prints a pixel on the matrix buffer, refresh the matrix to see the result </p>
 </script>
 
 <script type="text/javascript">
@@ -190,12 +224,36 @@
 		<input type="text" id="node-input-name" placeholder="Name">
 	</div>
 
-	<div class="form-row">
-		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display </label>
-		<input type="text" id="node-input-matrix"/>
+<script type="text/javascript">
+    RED.nodes.registerType('text',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+			matrix: { type:'led-matrix'},
+        },
+        inputs:1,
+        outputs:0,
+        icon: "file.png",
+        label: function() {
+            return this.name||"text to matrix";
+        }
+    });
+</script>
+
+
+
+<script type="text/x-red" data-template-name="rtext">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class='form-row'>
+		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display</label>
+		<input type='text' id='node-input-matrix'/>
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="draw-line">
-	<p> draw a horizontal line across the display </p>
+<script type="text/x-red" data-help-name="rtext">
+    <p>prints text to the matrix buffer, refresh the matrix to see the result </p>
 </script>
