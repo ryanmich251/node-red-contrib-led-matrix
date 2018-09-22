@@ -1,26 +1,26 @@
 
 <script type="text/javascript">
 	RED.nodes.registerType('rled-matrix', {
-		category: 'config', 
+		category: 'config',
 		defaults: {
-			height: {value:64, required:true}, 
+			height: {value:64, required:true},
 			width:  {value:64, required:true}
 		},
-		label: function() { 
+		label: function() {
 			return "LED MATRIX";
 		}
 	});
-</script> 
+</script>
 
 <script type="text/x-red" data-template-name="rled-matrix">
 	<div class="form-row">
-		<label for="node-config-input-width"><i class="icon-bookmark"></i> Width</label> 
+		<label for="node-config-input-width"><i class="icon-bookmark"></i> Width</label>
 		<input type="text" id="node-config-input-width">
-	</div> 
+	</div>
 	<div class="form-row">
-		<label for="node-config-input-height"><i class="icon-bookmark"></i> Height</label> 
-		<input type="text" id="node-config-input-height"> 
-	</div> 
+		<label for="node-config-input-height"><i class="icon-bookmark"></i> Height</label>
+		<input type="text" id="node-config-input-height">
+	</div>
 </script>
 
 
@@ -57,111 +57,145 @@
     <p>prints a colour to a pixel</p>
 </script>
 
-<script type="text/javascript"> 
-	RED.nodes.registerType("rrefresh-matrix",  
+<script type="text/javascript">
+	RED.nodes.registerType("rrefresh-matrix",
 	{
-		category: 'function', 
-		color: '#F8FF00', 
-		defaults: 
+		category: 'function',
+		color: '#F8FF00',
+		defaults:
 		{
-			name: {value:""}, 
-			matrix: {type: 'rled-matrix'}, 
-		}, 
-		inputs:1, 
-		outputs:0, 
-		icon: "file.png", 
-		label: function () 
+			name: {value:""},
+			matrix: {type: 'rled-matrix'},
+		},
+		inputs:1,
+		outputs:0,
+		icon: "file.png",
+		label: function ()
 		{
-			return this.name || "rrefresh-matrix"; 
-		} 
-	}); 
-</script> 
-
-<script type="text/x-red" data-template-name="rrefresh-matrix"> 
-	<div class="form-row"> 
-		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label> 
-		<input type="text" id="node-input-name" placeholder="Name"> 
-	</div>  
-	
-	<div class="form-row"> 
-		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display </label> 
-		<input type="text" id="node-input-matrix"/> 
-	</div> 
-</script> 
-
-<script type="text/x-red" data-help-name="rpixel"> 
-	<p> updates the display with vysnc </p> 
-</script> 
-
-<script type="text/javascript"> 
-	RED.nodes.registerType('rimage-to-pixels',  
-	{
-		category: 'function', 
-		color: '#F8FF00', 
-
-		defaults: 
-		{
-			name: {value:""}, 
-			file: {value:""}, 
-		}, 
-		
-		inputs:1, 
-		outputs:1, 
-		icon: "file.png", 
-		label: function() 
-		{
-			return this.name || "rimage to pixels"; 
+			return this.name || "rrefresh-matrix";
 		}
-	}); 
-</script> 
+	});
+</script>
 
-<script type="text/x-red" data-template-name="rimage-to-pixels"> 
+<script type="text/x-red" data-template-name="rrefresh-matrix">
 	<div class="form-row">
-		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label> 
-		<input type="text" id="node-input-name" placeholder="Name"> 
-	</div> 
+		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
 
-	<div class="form-row"> 
-		<label for="node-config-input-file"> <i class="icon-tag"></i> File </label> 
-		<input type="text" id="node-input-file" placeholder="File://"> 
-	</div> 
-</script> 
-
-
-<script type="text/javascript"> 
-	RED.nodes.registerType("rclear-matrix", 
-	{
-		category: 'function', 
-		color: '#F8FF00', 
-		defaults: 
-		{
-			name: {value:""}, 
-			matrix: {type: "rled-matrix"}, 
-		}, 
-		inputs:1, 
-		outputs:0, 
-		icon: "file.png", 
-		label: function() 
-		{
-			return this.name || "led-matrix";
-		}
-	}); 
-</script> 
-
-<script type="text/x-red" data-template-name = "rclear-matrix"> 
 	<div class="form-row">
-		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label> 
-		<input type="text" id="node-input-name" placeholder="Name"> 
-	</div> 
-
-	<div class="form-row"> 
-		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display </label> 
+		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display </label>
 		<input type="text" id="node-input-matrix"/>
-	</div> 
-</script> 
+	</div>
+</script>
 
-<script type="text/x-red" data-help-name="rclear-matrix"> 
-	<p> clear pixels off the display </p> 
+<script type="text/x-red" data-help-name="rpixel">
+	<p> updates the display with vysnc </p>
+</script>
+
+<script type="text/javascript">
+	RED.nodes.registerType('rimage-to-pixels',
+	{
+		category: 'function',
+		color: '#F8FF00',
+
+		defaults:
+		{
+			name: {value:""},
+			file: {value:""},
+		},
+
+		inputs:1,
+		outputs:1,
+		icon: "file.png",
+		label: function()
+		{
+			return this.name || "rimage to pixels";
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="rimage-to-pixels">
+	<div class="form-row">
+		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+
+	<div class="form-row">
+		<label for="node-config-input-file"> <i class="icon-tag"></i> File </label>
+		<input type="text" id="node-input-file" placeholder="File://">
+	</div>
 </script>
 
 
+<script type="text/javascript">
+	RED.nodes.registerType("rclear-matrix",
+	{
+		category: 'function',
+		color: '#F8FF00',
+		defaults:
+		{
+			name: {value:""},
+			matrix: {type: "rled-matrix"},
+		},
+		inputs:1,
+		outputs:0,
+		icon: "file.png",
+		label: function()
+		{
+			return this.name || "led-matrix";
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name = "rclear-matrix">
+	<div class="form-row">
+		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+
+	<div class="form-row">
+		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display </label>
+		<input type="text" id="node-input-matrix"/>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="rclear-matrix">
+	<p> clear pixels off the display </p>
+</script>
+
+<script type="text/javascript">
+	RED.nodes.registerType("draw-line",
+	{
+		category: 'function',
+		color: '#F8FF00',
+		defaults:
+		{
+			name: {value:""},
+			matrix: {type: 'rled-matrix'},
+		},
+		inputs:1,
+		outputs:1,
+		icon: "file.png",
+		label: function()
+		{
+			return this.name || "draw-line";
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name = "draw-line">
+	<div class="form-row">
+		<label for="node-config-input-name"> <i class="icon-tag"></i> Name </label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+
+	<div class="form-row">
+		<label for="node-config-input-matrix"><i class='fa fa-tag'></i> Display </label>
+		<input type="text" id="node-input-matrix"/>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="draw-line">
+	<p> draw a horizontal line across the display </p>
+</script>

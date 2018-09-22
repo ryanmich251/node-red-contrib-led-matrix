@@ -1,5 +1,5 @@
 var Matrix = require('node-rpi-rgb-led-matrix')
-var getPixels = require('get-pixels'); 
+var getPixels = require('get-pixels');
 
 
 //var led = new LedMatrix(64, 64, 1, 2, "adafruit-hat-pwm");
@@ -8,33 +8,50 @@ module.exports = function(RED) {
 
 	var led;
 
-	function LedMatrix(n) 
+	function DrawLine(config) {
+		RED.nodes.createNode(this, config);
+		var node = this;
+
+		node.on('input', function(msg)
+		{
+			var output = []
+			if(msg.payload)
+			{
+				for(x=0; x<20; x++) {
+				    output.push({payload: {x:x, y:0, r:255, g:255, b:255} });
+				}
+				node.send([output]);
+			}
+		});
+	}
+
+	function LedMatrix(n)
 	{
 		RED.nodes.createNode(this, n);
-		this.width = n.width; 
-		this.height = n.height; 
+		this.width = n.width;
+		this.height = n.height;
 
-		console.log("initing led matrix node"); 
-		if(!led) 
+		console.log("initing led matrix node");
+		if(!led)
 		{
 			led = new Matrix(64, 64, 1, 2, "adafruit-hat-pwm");
 		}
 
-		if(led) 
+		if(led)
 		{
 			led.clear();
-			led.update(); 
+			led.update();
 		}
 
 	}
 
-	function PixelNode (config) 
+	function PixelNode (config)
 	{
-		RED.nodes.createNode(this, config); 
-		var node = this; 
+		RED.nodes.createNode(this, config);
+		var node = this;
 
-		node.on('input', function(msg) 
-		{ 
+		node.on('input', function(msg)
+		{
 			led.setPixel(msg.payload.x, msg.payload.y, msg.payload.r, msg.payload.g, msg.payload.b);
 
 		});
@@ -42,43 +59,43 @@ module.exports = function(RED) {
 
 	function RefreshMatrix (config)
 	{
-		RED.nodes.createNode(this, config); 
-		var node = this; 
+		RED.nodes.createNode(this, config);
+		var node = this;
 
-		node.on('input', function(msg) 
+		node.on('input', function(msg)
 		{
-			if(msg.payload) 
+			if(msg.payload)
 			{
-				led.update(); 
+				led.update();
 			}
-		}); 
+		});
 	}
 
-	function ImageToPixels (config) 
+	function ImageToPixels (config)
 	{
-		RED.nodes.createNode(this, config); 
-		var node = this; 
-		node.file = config.file; 
+		RED.nodes.createNode(this, config);
+		var node = this;
+		node.file = config.file;
 
 		var output = [];
 
-		function readySend () 
+		function readySend ()
 		{
 			console.log("sending pixels");
-			node.send([output]); 
+			node.send([output]);
 		}
 
-		node.on('input', function(msg) 
+		node.on('input', function(msg)
 		{
 			if(msg.payload)
 			{
 				console.log(msg.payload);
-				node.file = msg.payload; 
+				node.file = msg.payload;
 			}
 
-			getPixels(node.file, function(err, pixels) 
+			getPixels(node.file, function(err, pixels)
 			{
-				for(var x = 0; x < 128; x++) 
+				for(var x = 0; x < 128; x++)
 				{
 					for(var y = 0; y < 64; y++)
 					{
@@ -96,21 +113,21 @@ module.exports = function(RED) {
 		});
 	}
 
-	function ClearMatrix (config) 
+	function ClearMatrix (config)
 	{
-		RED.nodes.createNode(this, config); 
-		var node = this; 
+		RED.nodes.createNode(this, config);
+		var node = this;
 
-		node.on('input', function(msg) 
+		node.on('input', function(msg)
 		{
-			if(msg.payload) 
+			if(msg.payload)
 			{
 				console.log("clearing");
-				led.clear(); 
+				led.clear();
 			}
-		}); 
+		});
 	}
-			
+
 
 
 
@@ -120,5 +137,5 @@ module.exports = function(RED) {
 	RED.nodes.registerType("rpixel", PixelNode);
 	RED.nodes.registerType("rrefresh-matrix", RefreshMatrix);
 	RED.nodes.registerType("rimage-to-pixels", ImageToPixels);
+	RED.nodes.registerType("draw-line", DrawLine);
 }
-			
